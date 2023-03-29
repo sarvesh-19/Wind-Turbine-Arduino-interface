@@ -8,6 +8,7 @@ Servo myservo;  // create servo object to control a servo
 int pos = 0;    // variable to store the servo position
 const int buttonA = 3; // button 1 to extend actuator
 const int buttonB = 4; // button 2 to retract actuator
+int previous = 0; 
 
 void setup() {
   Serial.begin(9600);
@@ -18,22 +19,33 @@ void setup() {
 
 void loop() {
   if (digitalRead(buttonA) == LOW){
-    for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
+    for (pos = previous; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
       // in steps of 1 degree
       myservo.write(pos);              // tell servo to go to position in variable 'pos'
       
       Serial.print("Current Pos: ");
       Serial.println(pos);
+      previous = pos;
       
+      // break 
+      if (digitalRead(buttonA) == HIGH) {
+         break;
+        }
       delay(30);                       // waits 30ms for the servo to reach the position
     }
   }
   if (digitalRead(buttonB) == LOW) {
-    for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+    for (pos = previous; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
       myservo.write(pos);              // tell servo to go to position in variable 'pos'
       
       Serial.print("Current Pos: ");
       Serial.println(pos);
+      previous = pos;
+
+      // break
+      if (digitalRead(buttonB) == HIGH) {
+        break;
+       }
       
       delay(30);                       // waits 30ms for the servo to reach the position
     }
