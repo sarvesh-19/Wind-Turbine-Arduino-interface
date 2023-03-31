@@ -12,6 +12,6 @@ void loop(){
   // Voltage divider formula required to get actual voltage value at output
   voltage = value * (5.0/1024)*((R1 + R2)/R2);
   Serial.print("Voltage =");
-  Serial.println(voltage);
+  Serial.println(voltage * 19);
   delay(500);
 }
