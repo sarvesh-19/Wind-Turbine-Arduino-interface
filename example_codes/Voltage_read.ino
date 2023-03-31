@@ -10,7 +10,7 @@ void setup(){
 void loop(){
   value = analogRead(A0);
   // Voltage divider formula required to get actual voltage value at output
-  voltage = value * (5.0/1024)*((R1 + R2)/R2) * 19;
+  voltage = value * (5.0/1024)*((R1 + R2)/R2);
   Serial.print("Voltage =");
   Serial.println(voltage);
   delay(500);
