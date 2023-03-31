@@ -1,7 +1,7 @@
 int value = 0;
 float voltage;
-float R1 = 47000.0; // change this
-float R2 = 33000.0; // change this
+float R1 = 180000; // change this
+float R2 = 10000; // change this
 
 void setup(){
   Serial.begin(9600);
