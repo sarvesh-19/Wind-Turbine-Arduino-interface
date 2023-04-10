@@ -9,7 +9,7 @@ const int buttonB = 4; // button 2 to cycle through actuator retraction stages
 int currentPos = 0; // variable to store the current actuator position
 int stageIndex = 0; // variable to store the current stage index
 const int numStages = 5; // total number of stages
-const int stagePos[numStages] = {0, 45, 90, 135, 180}; // actuator position for each stage
+const int stagePos[numStages] = {10, 60, 90, 90, 180}; // actuator position for each stage
 const int minPos = 0; // minimum actuator position
 const int maxPos = 180; // maximum actuator position
 
