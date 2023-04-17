@@ -18,7 +18,7 @@ void loop()
 {
   print_to_Serial();
   if (millis() - millisBefore > 1000) {
-    rpm = (holes / 12.0)*60;
+    rpm = (holes / 24.0)*60;
     holes = 0;
     millisBefore = millis();
   }
