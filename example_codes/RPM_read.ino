@@ -26,7 +26,9 @@ void loop()
 }
 
 void print_to_Serial() {
-  Serial.print("RPM   : ");
+  Serial.print("Holes   : ");
+  Serial.print(holes);
+  Serial.print(" -- RPM   : ");
   Serial.println(rpm);
 }
 
