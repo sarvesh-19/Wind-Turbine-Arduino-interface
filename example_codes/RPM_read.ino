@@ -10,7 +10,7 @@ void setup()
 {
   Serial.begin(9600);
   pinMode(2, INPUT);
-  attachInterrupt(digitalPinToInterrupt(2), count, FALLING);
+  attachInterrupt(digitalPinToInterrupt(2), count, FALLING); // falling is where detect happens
   delay(1000);
 }
 
@@ -26,12 +26,8 @@ void loop()
 }
 
 void print_to_Serial() {
-  Serial.print("Holes : ");
-  Serial.print(holes);
-  Serial.print("    ");
   Serial.print("RPM   : ");
-  Serial.print(rpm);
-  Serial.print("    ");
+  Serial.println(rpm);
 }
 
 void count() {
