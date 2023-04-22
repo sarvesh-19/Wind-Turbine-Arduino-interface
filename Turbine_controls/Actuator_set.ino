@@ -18,7 +18,7 @@ void setup()
   pinMode(2, INPUT); // set digital pin 2 as input
   attachInterrupt(digitalPinToInterrupt(2), count, FALLING); // attach interrupt to pin 2, triggered on falling edge (when hole is detected)
   actuator.attach(9); // attach the linear actuator to digital pin 9
-  brake.attach(8); // attach the brake actuator to digital pin 8
+  brake.attach(10); // attach the brake actuator to digital pin 10
   delay(1000); // wait for 1 second before starting to allow the interrupt to settle
 }
 
@@ -31,14 +31,14 @@ void loop()
       maxRpm = rpm; // update max RPM if new RPM is higher
     }
     // Determine position of the linear actuator based on RPM
-    if (rpm > 1300) {
+    if (rpm > 1100) {
       position = 84;
-      brake_pos = 60;
-    } else if (rpm < 800) {
+      brake_pos = 95;
+    } else if (rpm < 400) {
       position = 10;
       brake_pos = 10;
     } else {
-      position = 45;
+      position = 65;
       brake_pos = 10;
     }
     actuator.write(position); // set the position/angle of the linear actuator
