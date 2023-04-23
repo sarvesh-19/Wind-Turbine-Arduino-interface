@@ -38,33 +38,33 @@ void loop(){
   Serial.print(in_voltage, 2);
 
   // Impletement switching
-  if (in_voltage >= 0 && in_voltage < 2) {
+  if (in_voltage >= 0 && in_voltage < 5) {
     digitalWrite(4, HIGH);
     digitalWrite(5, LOW);
     digitalWrite(6, LOW);
     digitalWrite(7, LOW);
     Serial.println(" -- Mosfet 1 on");
   }
-  else if (in_voltage > 2 && in_voltage < 4) {
-    digitalWrite(4, LOW);
+  else if (in_voltage > 5 && in_voltage < 10) {
+    digitalWrite(4, HIGH);
     digitalWrite(5, HIGH);
     digitalWrite(6, LOW);
     digitalWrite(7, LOW);
-    Serial.println(" -- Mosfet 2 on"); 
+    Serial.println(" -- Mosfet 1, 2 on"); 
   }
-    else if (in_voltage > 4 && in_voltage < 6) {
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
+    else if (in_voltage > 10 && in_voltage < 15) {
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
     digitalWrite(6, HIGH);
     digitalWrite(7, LOW);
-    Serial.println(" -- Mosfet 3 on"); 
+    Serial.println(" -- Mosfet 1, 2, 3 on"); 
   }
-    else if (in_voltage > 6 && in_voltage < 8) {
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
-    digitalWrite(6, LOW);
+    else if (in_voltage > 15 && in_voltage < 25) {
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+    digitalWrite(6, HIGH);
     digitalWrite(7, HIGH);
-    Serial.println(" -- Mosfet 4 on"); 
+    Serial.println(" -- Mosfet 1, 2, 3, 4 on"); 
   }
   
   // Short delay
