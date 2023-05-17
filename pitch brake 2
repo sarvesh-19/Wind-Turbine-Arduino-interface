@@ -1,0 +1,74 @@
+#include <Servo.h>
+#include <Wire.h>
+
+Servo myservo;  // create servo object to control a servo
+// twelve servo objects can be created on most boards
+
+const int buttonA = 3; // button 1 to cycle through actuator extension stages
+const int buttonB = 4; // button 2 to cycle through actuator retraction stages
+int currentpos = 0; // variable to store the current actuator position
+int stageIndex = 0; // variable to store the current stage index
+const int numStages = 5; // total number of stages
+const int stagePos[numStages] = {10, 60, 90, 120, 180}; // actuator position for each stage
+const int minPos = 0; // minimum actuator position
+const int maxPos = 180; // maximum actuator position
+
+float rpm = 0; // variable to store calculated RPM
+float maxRpm = 0; // variable to store maximum RPM observed so far
+unsigned long millisBefore; // variable to store the millis() value when the previous RPM calculation was done
+volatile int holes; // variable to store the number of holes detected by the interrupt
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(2,INPUT);
+  attachInterrupt(digitalPinToInterrupt(2), count, FALLING);
+  delay(1000);
+  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+  pinMode(buttonA, INPUT_PULLUP); // set input A to pin 3
+  pinMode(buttonB, INPUT_PULLUP); // set input B to pin 4
+  myservo.write(currentpos); // set initial position to 0
+}
+
+void loop() {
+  print_to_Serial();
+  if (millis() - millisBefore > 1000) { // check if 1 second has elapsed since the last RPM calculation
+    rpm = (holes / 24.0)*60; // calculate RPM using the number of holes detected in the last second
+    if (rpm > maxRpm) { // check if new RPM is higher than current max
+      maxRpm = rpm; // update max RPM if new RPM is higher
+    }
+    holes = 0; // reset the hole counter
+    millisBefore = millis(); // store the current millis() value for the next RPM calculation
+  }
+
+  if (maxRpm <= 2000) {
+    currentpos = stagePos[0];
+    myservo.write(currentpos);
+    Serial.print("Current Pitch Position: ");
+    Serial.println(currentpos);
+  }
+
+  if (maxRpm >= 2500) {
+    pitchstop();
+  }
+}
+
+void pitchstop() {
+  currentpos = stagePos[4];
+  myservo.write(currentpos);
+  Serial.print("Current Pitch Position: ");
+  Serial.println(currentpos);
+}
+
+void print_to_Serial() {
+  Serial.print("RPM   : ");
+  Serial.print(rpm);
+  Serial.print("    Max RPM: ");
+  Serial.print(maxRpm);
+  Serial.print("    Holes: ");
+  Serial.println(holes);
+}
+
+void count() {
+    holes++;
+}
+
